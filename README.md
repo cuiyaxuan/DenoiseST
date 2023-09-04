@@ -127,3 +127,23 @@ for i in [4000, 4500, 5000]:
 
 ```
 
+##### Using R virtual environment with conda
+```R
+
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("SingleCellExperiment")
+BiocManager::install("SC3")
+
+
+
+
+install.packages('Seurat')
+install.packages("hdf5r")
+install.packages('ggplot2')
+install.packages('dplyr')
+install.packages('foreach')
+install.packages('parallel')
+install.packages('doParallel')
+
+```
