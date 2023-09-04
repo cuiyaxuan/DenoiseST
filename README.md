@@ -220,7 +220,7 @@ print(ari)
 
 ```
 
-## Simplified version
+## Simplified version <br>
 
 ```python
 from DenoiseST import DenoiseST
@@ -272,7 +272,7 @@ adata.obs['domain'].to_csv("label.csv")
 ```
 
 
-## High resolution data
+## High resolution data <br>
 
 ```python
 from DenoiseST import DenoiseST
