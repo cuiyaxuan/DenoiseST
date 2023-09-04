@@ -161,7 +161,7 @@ library(parallel)
 library(doParallel)
 
 source('151673_cri4.R')
-hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5')
+hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
 feature<-select_feature(hc1,4000,500)
 detectCores()
 cl <- makeCluster(3) # call 3 cpu cores
@@ -179,7 +179,7 @@ stopCluster(cl)
 
 source('GNN_Tradition_6.R')
 
-hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5')
+hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
 pbmc=CreateSeuratObject(counts = hc1, project = "HC_1")
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 5000)
 all.genes <- rownames(pbmc)
@@ -208,7 +208,7 @@ pre_label=label
 pre_label[1] 
 pre_label=as.data.frame(pre_label)
 rownames(pre_label)=colnames(mat)
-true_label=read.csv('/home/cuiyaxuan/spatialLIBD/151673/cluster_labels_151673.csv',row.names = 1)
+true_label=read.csv('/home/cuiyaxuan/spatialLIBD/151673/cluster_labels_151673.csv',row.names = 1) # the ground truth label
 a <- rownames(pre_label)
 aa <- rownames(true_label)
 pre_label=pre_label[rownames(pre_label) %in% aa,]
@@ -217,5 +217,108 @@ library("mclust")
 true_label=as.array(true_label[,1])
 ari=adjustedRandIndex(pre_label, true_label)
 print(ari)
+
+```
+
+## Simplified version
+
+```python
+from DenoiseST import DenoiseST
+import os
+import torch
+import pandas as pd
+import scanpy as sc
+from sklearn import metrics
+import multiprocessing as mp
+
+def setup_seed(seed=41):
+    import torch
+    import os
+    import numpy as np
+    import random
+    torch.manual_seed(seed)  
+    np.random.seed(seed)  # Numpy module.
+    random.seed(seed)  # Python random module.
+    if torch.cuda.is_available():
+        # torch.backends.cudnn.benchmark = False
+        torch.backends.cudnn.deterministic = True
+        torch.cuda.manual_seed(seed)  
+        torch.cuda.manual_seed_all(seed) 
+        #os.environ['PYTHONHASHSEED'] = str(seed)
+
+setup_seed(41)
+
+device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
+
+
+n_clusters = 7  ###### the number of spatial domains.
+file_fold = '/home/cuiyaxuan/spatialLIBD/151673' #### to your path
+adata = sc.read_visium(file_fold, count_file='151673_filtered_feature_bc_matrix.h5', load_images=True) #### project name
+adata.var_names_make_unique()
+model = DenoiseST(adata,device=device,n_top_genes=5000)
+adata = model.train()
+radius = 50
+tool = 'mclust' # mclust, leiden, and louvain
+from utils import clustering
+
+if tool == 'mclust':
+   clustering(adata, n_clusters, radius=radius, method=tool, refinement=True)
+elif tool in ['leiden', 'louvain']:
+   clustering(adata, n_clusters, radius=radius, method=tool, start=0.1, end=2.0, increment=0.01, refinement=False)
+
+adata.obs['domain']
+adata.obs['domain'].to_csv("label.csv")
+
+```
+
+
+## High resolution data
+
+```python
+from DenoiseST import DenoiseST
+import os
+import torch
+import pandas as pd
+import scanpy as sc
+from sklearn import metrics
+import multiprocessing as mp
+
+def setup_seed(seed=41):
+    import torch
+    import os
+    import numpy as np
+    import random
+    torch.manual_seed(seed)  
+    np.random.seed(seed)  # Numpy module.
+    random.seed(seed)  # Python random module.
+    if torch.cuda.is_available():
+        # torch.backends.cudnn.benchmark = False
+        torch.backends.cudnn.deterministic = True
+        torch.cuda.manual_seed(seed)  
+        torch.cuda.manual_seed_all(seed) 
+        #os.environ['PYTHONHASHSEED'] = str(seed)
+
+setup_seed(41)
+
+device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
+
+
+n_clusters = 7  ###### the number of spatial domains.
+file_fold = '/home/cuiyaxuan/spatialLIBD/151673' #### to your path
+adata = sc.read_visium(file_fold, count_file='151673_filtered_feature_bc_matrix.h5', load_images=True) #### project name
+adata.var_names_make_unique()
+model = DenoiseST(adata,device=device,n_top_genes=5000)
+adata = model.train()
+radius = 50
+tool = 'leiden' # mclust, leiden, and louvain
+from utils import clustering
+
+if tool == 'mclust':
+   clustering(adata, n_clusters, radius=radius, method=tool, refinement=True)
+elif tool in ['leiden', 'louvain']:
+   clustering(adata, n_clusters, radius=radius, method=tool, start=0.1, end=2.0, increment=0.01, refinement=False)
+
+adata.obs['domain']
+adata.obs['domain'].to_csv("label.csv")
 
 ```
