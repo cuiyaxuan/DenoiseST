@@ -19,14 +19,14 @@ def setup_seed(seed=41):
     import os
     import numpy as np
     import random
-    torch.manual_seed(seed)  # 为CPU设置随机种子
+    torch.manual_seed(seed)  
     np.random.seed(seed)  # Numpy module.
     random.seed(seed)  # Python random module.
     if torch.cuda.is_available():
         # torch.backends.cudnn.benchmark = False
         torch.backends.cudnn.deterministic = True
-        torch.cuda.manual_seed(seed)  # 为当前GPU设置随机种子
-        torch.cuda.manual_seed_all(seed)  # 为所有GPU设置随机种子
+        torch.cuda.manual_seed(seed)  
+        torch.cuda.manual_seed_all(seed) 
         #os.environ['PYTHONHASHSEED'] = str(seed)
 
 setup_seed(41)
