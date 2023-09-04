@@ -75,7 +75,7 @@ zipp==3.10.0
 
 ```
 
-
+##### First, we execute the Nonlinear model in the python environment
 
 ```python
 from DenoiseST import DenoiseST
@@ -146,6 +146,7 @@ install.packages('doParallel')
 
 ```
 
+##### Then, we execute the Linear model in the R environment
 
 ```R
 
@@ -219,7 +220,7 @@ ari=adjustedRandIndex(pre_label, true_label)
 print(ari)
 
 ```
-
+# To prevent the algorithm from overfitting, we propose a simplified version. It not only reduces the complexity of the algorithm, but also reduces the operation time. <br>
 ## Simplified version <br>
 
 ```python
