@@ -136,8 +136,6 @@ BiocManager::install("SingleCellExperiment")
 BiocManager::install("SC3")
 
 
-
-
 install.packages('Seurat')
 install.packages("hdf5r")
 install.packages('ggplot2')
