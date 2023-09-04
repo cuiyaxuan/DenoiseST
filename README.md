@@ -202,10 +202,8 @@ group4=t(group4)
 group5=t(group5)
 group6=t(group6)
 mm=result(mat,group1,group2,group3,group4,group5,group6)
-system.time(
-  label<-spectralClustering(mm, K = 7)
-  #kmeans(metadata(sce)$sc3$transformations$pearson_pca,7)
-)
+
+label<-spectralClustering(mm, K = 7)
 pre_label=label
 pre_label[1] 
 pre_label=as.data.frame(pre_label)
