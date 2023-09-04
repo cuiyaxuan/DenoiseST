@@ -303,14 +303,14 @@ setup_seed(41)
 device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
 
 
-n_clusters = 7  ###### the number of spatial domains.
-file_fold = '/home/cuiyaxuan/spatialLIBD/151673' #### to your path
-adata = sc.read_visium(file_fold, count_file='151673_filtered_feature_bc_matrix.h5', load_images=True) #### project name
+n_clusters = 10  ###### the number of spatial domains.
+file_path = '/home/cuiyaxuan/spatialLIBD/6.Mouse_Hippocampus_Tissue/' #please replace 'file_path' with the download path
+adata = sc.read_h5ad(file_path + 'filtered_feature_bc_matrix_200115_08.h5ad') #### project name
 adata.var_names_make_unique()
-model = DenoiseST(adata,device=device,n_top_genes=5000)
+model = DenoiseST(adata,datatype='Slide',device=device,n_top_genes=5000)
 adata = model.train()
 radius = 50
-tool = 'leiden' # mclust, leiden, and louvain
+tool = 'louvain' # mclust, leiden, and louvain
 from utils import clustering
 
 if tool == 'mclust':
