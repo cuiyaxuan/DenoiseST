@@ -323,3 +323,109 @@ adata.obs['domain']
 adata.obs['domain'].to_csv("label.csv")
 
 ```
+
+
+
+
+
+
+# FVG:identify functionally variable genes
+
+##### Using R virtual environment with conda
+```R
+
+install.packages("devtools")
+devtools::install_github("shaoqiangzhang/DEGman")
+
+
+install.packages('Seurat')
+install.packages("hdf5r")
+install.packages('philentropy')
+install.packages('dplyr')
+install.packages('foreach')
+install.packages('parallel')
+install.packages('doParallel')
+
+```
+
+##### Then, we execute the FVG model in the R environment
+
+```R
+library(DEGman)
+library("Seurat")
+library("dplyr")
+library("hdf5r")
+library(philentropy)
+library(foreach)
+library(parallel)
+
+
+library(doParallel)source('distribution.R')
+
+hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5')
+label=read.csv("/home/cuiyaxuan/metric_change/revise_R2/est_151673/conlabel.csv",header = T,row.names = 1)
+k=2 ##### Define the cluster to be analyzed
+
+dis<-distri(hc1,label,k)
+
+
+
+source('test_finally.R')
+
+
+tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151507/spatial/tissue_positions_list.csv",row.names = 1,header = FALSE)
+hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151507/151507_filtered_feature_bc_matrix.h5')
+pbmc=CreateSeuratObject(counts = hc1, project = "HC_1", min.cells = 10)
+pbmc=NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
+pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 30000)
+all.genes <- rownames(pbmc)
+mat<-as.matrix(pbmc[["RNA"]]@data)
+max(mat)
+min(mat)
+dim(mat)
+a <- VariableFeatures(pbmc)
+mat=mat[rownames(mat) %in% a,]
+dim(mat)
+mat=t(mat)
+aa <- rownames(mat)
+tissue_local=tissue_local[rownames(tissue_local) %in% aa,]
+
+DF1 <- mutate(tissue_local, id = rownames(tissue_local))
+class(tissue_local)
+class(mat)
+mat=as.data.frame(mat)
+DF2 <- mutate(mat, id = rownames(mat))
+dat=merge(DF1,DF2,by="id")
+#View(dat)
+###对基因进行处理，合并基因和xy坐标
+x_y_list=dat[,3:4]
+#View(x_y_list)
+dim(x_y_list)
+dat=t(dat)
+#View(dat)
+df1=read.csv("df1.csv",row.names = 1,header = T)
+class(df1[,1])
+class(rownames(dat))
+dim(dat)
+class(rownames(dat))
+#View(rownames(dat))
+class(df1[,1])
+
+
+dat1=dat[rownames(dat) %in% df1[,1],]
+#geneval=as.numeric(dat[rownames(dat) %in% df1[,2][8],])
+dat1=t(dat1)
+dim(dat1)
+############################################################################################
+n_cores=24
+cls <- makeCluster(n_cores) ## call 24 cpu cores
+registerDoParallel(cls)
+crinum=foreach(q=1:dim(dat1)[2],.combine='rbind') %dopar% cripar(q,dat1,x_y_list)
+stopCluster(cls)
+write.csv(crinum,"mark_gene_cri_vec.csv")
+write.csv(df1[,1],"vectmark.csv")
+
+
+```
+
+
