@@ -187,7 +187,7 @@ setup_seed(41)
 device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
 
 
-n_clusters = 7  ###### the number of spatial domains.
+n_clusters = 10  ###### the number of spatial domains.
 file_fold = '/home/cuiyaxuan/spatialLIBD/3.Human_Breast_Cancer' #### to your path
 adata = sc.read_visium(file_fold, count_file='filtered_feature_bc_matrix.h5', load_images=True) #### project name
 adata.var_names_make_unique()
