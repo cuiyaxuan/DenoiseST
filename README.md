@@ -310,8 +310,8 @@ dis<-distri(hc1,label,k)
 source('test_finally.R')
 
 
-tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151507/spatial/tissue_positions_list.csv",row.names = 1,header = FALSE) #### to your path and project name
-hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151507/151507_filtered_feature_bc_matrix.h5') #### to your path and project name
+tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151673/spatial/tissue_positions_list.csv",row.names = 1,header = FALSE) #### to your path and project name
+hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
 pbmc=CreateSeuratObject(counts = hc1, project = "HC_1", min.cells = 10)
 pbmc=NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 30000)
