@@ -3,7 +3,7 @@
 ##### DenoiseST is used on spatial transcriptomics (ST) datasets. In essence, you can refer to the following examples: <br>
 
 ##### * _DenoiseST on DLPFC from 10x Visium._ <br>
-##### Using python virtual environment with conda
+##### Using python virtual environment with conda. Please create a Pytorch environment, install Pytorch and some other packages, such as "numpy","pandas", "scikit-learn" and "scanpy". See the requirements.txt file for an overview of the packages in the environment we used to produce our results.
 ```python
 
 anndata==0.8.0
