@@ -283,7 +283,7 @@ install.packages('doParallel')
 
 ```
 
-##### Then, we execute the FVG model in the R environment
+##### Then, we execute the FVG model in the R environment <br>
 ##### First, cd /home/.../DenoiseST-main/FVG <br>
 
 ```R
