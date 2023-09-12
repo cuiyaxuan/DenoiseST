@@ -360,7 +360,8 @@ library(foreach)
 library(parallel)
 
 
-library(doParallel)source('distribution.R')
+library(doParallel)
+source('distribution.R')
 
 hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5')
 label=read.csv("/home/cuiyaxuan/metric_change/revise_R2/est_151673/conlabel.csv",header = T,row.names = 1)
