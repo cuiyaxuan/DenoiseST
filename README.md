@@ -106,7 +106,7 @@ tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151673/spatial/tissue_positio
 adj_matrix=construct_adj_matrix(feature[[1]],tissue_local)
 write.table(adj_matrix,file="adj_matrix.txt",sep=" ",quote=TRUE)
 detectCores()
-cl <- makeCluster(3) # call 5 cpu cores
+cl <- makeCluster(3) # call 3 cpu cores
 parLapply(cl,1:3,K=7,spectral_nei)
 stopCluster(cl)
 
