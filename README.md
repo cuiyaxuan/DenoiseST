@@ -59,7 +59,8 @@ for i in [4000, 4500, 5000]:
 
 ```
 
-##### Using R virtual environment with conda
+##### Since the linear model is implemented in the R programming language, it's necessary to set up a virtual R environment. DenoiseST requires R 4.0+ and Bioconductor 3.12+. Specific package dependencies are defined in the package DESCRIPTION and are managed by the Bioconductor and devtools installers. <br>
+##### Using virtual environment with conda
 ```R
 
 if (!require("BiocManager", quietly = TRUE))
