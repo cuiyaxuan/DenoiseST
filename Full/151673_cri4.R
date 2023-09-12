@@ -327,26 +327,6 @@ spectral_nei<-function(X,K){
 }
 
 
-hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5')
-feature<-select_feature(hc1,4000,500)
-detectCores()
-cl <- makeCluster(3) # call 5 cpu cores
-parLapply(cl,1:3,feature=feature,k=7,pearson_metric)
-stopCluster(cl)
-
-
-
-tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151673/spatial/tissue_positions_list.csv",row.names = 1,header = FALSE)
-adj_matrix=construct_adj_matrix(feature[[1]],tissue_local)
-write.table(adj_matrix,file="adj_matrix.txt",sep=" ",quote=TRUE)
-
-detectCores()
-cl <- makeCluster(3) # call 5 cpu cores
-parLapply(cl,1:3,K=7,spectral_nei)
-stopCluster(cl)
-
-
-
 
 
 
