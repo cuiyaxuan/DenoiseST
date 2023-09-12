@@ -47,11 +47,7 @@ distri<-function(hc1,label,k){
 }
 
 
-hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151507/151507_filtered_feature_bc_matrix.h5')
-label=read.csv("/home/cuiyaxuan/metric_change/revise_R2/est_151507/conlabel.csv",header = T,row.names = 1)
-k=5
 
-dis<-distri(hc1,label,k)
 
 
 
