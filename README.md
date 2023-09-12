@@ -243,7 +243,7 @@ n_clusters = 10  ###### the number of spatial domains.
 file_path = '/home/cuiyaxuan/spatialLIBD/6.Mouse_Hippocampus_Tissue/' #please replace 'file_path' with the download path
 adata = sc.read_h5ad(file_path + 'filtered_feature_bc_matrix_200115_08.h5ad') #### project name
 adata.var_names_make_unique()
-model = DenoiseST(adata,datatype='Slide',device=device,n_top_genes=5000)
+model = DenoiseST(adata,datatype='Slide',device=device,n_top_genes=4000)
 adata = model.train()
 radius = 50
 tool = 'louvain' # mclust, leiden, and louvain
