@@ -5,8 +5,8 @@
 ##### * _DenoiseST on DLPFC from 10x Visium._ <br>
 ##### Using python virtual environment with conda. Please create a Pytorch environment, install Pytorch and some other packages, such as "numpy","pandas", "scikit-learn" and "scanpy". See the requirements.txt file for an overview of the packages in the environment we used to produce our results. <br>
 
-##### First, we execute the Nonlinear model in the python environment <br>
-First, cd /home/.../DenoiseST-main/Full <br>
+#####  We execute the Nonlinear model in the python environment <br>
+##### First, cd /home/.../DenoiseST-main/Full <br>
 
 ```python
 from DenoiseST import DenoiseST
