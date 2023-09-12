@@ -266,7 +266,7 @@ adata.obs['domain'].to_csv("label.csv")
 
 # FVG:identify functionally variable genes
 
-##### Using R virtual environment with conda
+##### Using R virtual environment with conda <br>
 ```R
 
 install.packages("devtools")
@@ -284,6 +284,7 @@ install.packages('doParallel')
 ```
 
 ##### Then, we execute the FVG model in the R environment
+##### First, cd /home/.../DenoiseST-main/FVG <br>
 
 ```R
 library(DEGman)
@@ -298,8 +299,8 @@ library(parallel)
 library(doParallel)
 source('distribution.R')
 
-hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5')
-label=read.csv("/home/cuiyaxuan/metric_change/revise_R2/est_151673/conlabel.csv",header = T,row.names = 1)
+hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
+label=read.csv("/home/cuiyaxuan/metric_change/revise_R2/est_151673/conlabel.csv",header = T,row.names = 1) # cluster label
 k=2 ##### Define the cluster to be analyzed
 
 dis<-distri(hc1,label,k)
@@ -309,8 +310,8 @@ dis<-distri(hc1,label,k)
 source('test_finally.R')
 
 
-tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151507/spatial/tissue_positions_list.csv",row.names = 1,header = FALSE)
-hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151507/151507_filtered_feature_bc_matrix.h5')
+tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151507/spatial/tissue_positions_list.csv",row.names = 1,header = FALSE) #### to your path and project name
+hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151507/151507_filtered_feature_bc_matrix.h5') #### to your path and project name
 pbmc=CreateSeuratObject(counts = hc1, project = "HC_1", min.cells = 10)
 pbmc=NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 30000)
