@@ -158,9 +158,15 @@ true_label=as.array(true_label[,1])
 ari=adjustedRandIndex(pre_label, true_label)
 print(ari)
 
-
-
 ```
+
+![image](https://github.com/cuiyaxuan/DenoiseST/blob/main/Image/151673pic.jpg)
+
+
+
+
+
+
 
 # To prevent the algorithm from overfitting, we propose a simplified version. It not only reduces the complexity of the algorithm, but also reduces the operation time. <br>
 ## Simplified version <br>
