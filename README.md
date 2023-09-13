@@ -83,7 +83,9 @@ install.packages('mclust')
 
 ##### Then, we execute the Linear model in the R environment
 
+
 ```R
+
 
 library(SingleCellExperiment)
 library(SC3)
@@ -101,28 +103,30 @@ hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_m
 feature<-select_feature(hc1,4000,500)
 detectCores()
 cl <- makeCluster(3) # call 3 cpu cores
-parLapply(cl,1:3,feature=feature,k=7,pearson_metric)
+k=7 # k represent the number of spatial domains.
+parLapply(cl,1:3,feature=feature,k=k,pearson_metric) 
 stopCluster(cl)
+
 tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151673/spatial/tissue_positions_list.csv",row.names = 1,header = FALSE)
 adj_matrix=construct_adj_matrix(feature[[1]],tissue_local)
 write.table(adj_matrix,file="adj_matrix.txt",sep=" ",quote=TRUE)
 detectCores()
 cl <- makeCluster(3) # call 3 cpu cores
-parLapply(cl,1:3,K=7,spectral_nei)
+parLapply(cl,1:3,K=k,spectral_nei)
 stopCluster(cl)
 
 
 
 source('GNN_Tradition_6.R')
 
-hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
+# hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
 pbmc=CreateSeuratObject(counts = hc1, project = "HC_1")
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 5000)
 all.genes <- rownames(pbmc)
 mat<-as.matrix(pbmc[["RNA"]]@data)
 a <- VariableFeatures(pbmc)
 mat=mat[rownames(mat) %in% a,]
-dim(mat)
+# dim(mat)
 
 group1=read.csv("./label_4000.csv",row.names = 1)
 group2=read.csv("./label_4500.csv",row.names = 1)
@@ -139,7 +143,7 @@ group5=t(group5)
 group6=t(group6)
 mm=result(mat,group1,group2,group3,group4,group5,group6)
 
-label<-spectralClustering(mm, K = 7)
+label<-spectralClustering(mm, K=k)
 pre_label=label
 pre_label[1] 
 pre_label=as.data.frame(pre_label)
@@ -154,7 +158,10 @@ true_label=as.array(true_label[,1])
 ari=adjustedRandIndex(pre_label, true_label)
 print(ari)
 
+
+
 ```
+
 # To prevent the algorithm from overfitting, we propose a simplified version. It not only reduces the complexity of the algorithm, but also reduces the operation time. <br>
 ## Simplified version <br>
 
