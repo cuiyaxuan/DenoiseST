@@ -320,8 +320,42 @@ dis<-distri(hc1,label,k)
 
 
 
-source('test_finally.R')
 
+
+
+
+
+
+
+
+
+#################################Spatial gene value compute################################
+
+
+
+library(DEGman)
+library("Seurat")
+library("dplyr")
+library("hdf5r")
+library(philentropy)
+library(foreach)
+library(parallel)
+library(doParallel)
+
+
+files<-dir(path = "./",
+             full.names = T,
+             pattern = ".csv")
+  library(tidyverse)
+  df<-map(files,read.csv)
+  class(df)
+  #df1<-reduce(df,full_join)
+  df1<-reduce(df,inner_join)
+  df1=df1[-1,]
+  
+  write.csv(df1,"df1.csv")
+
+source('test_finally.R')
 
 tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151673/spatial/tissue_positions_list.csv",row.names = 1,header = FALSE) #### to your path and project name
 hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
