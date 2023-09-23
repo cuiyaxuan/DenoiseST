@@ -273,6 +273,37 @@ adata.obs['domain'].to_csv("label.csv")
 ```
 
 
+# Estimated number of spatial transcriptome data clusters
+
+##### Using R virtual environment with conda <br>
+```R
+
+install.packages("devtools")
+devtools::install_github("shaoqiangzhang/DEGman")
+
+
+install.packages('Seurat')
+install.packages("hdf5r")
+install.packages('dplyr')
+install.packages('ClusterR')
+
+```
+##### First, cd /home/.../DenoiseST-main/Full <br>
+
+```R
+library("Seurat")
+library("dplyr")
+library("hdf5r")
+library("ClusterR")
+hc1= Read10X_h5('/Users/cyx/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5')
+estimate_spatial(hc1=hc1)
+```
+
+
+
+
+
+
 
 
 
