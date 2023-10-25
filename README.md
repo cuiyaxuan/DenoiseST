@@ -5,7 +5,7 @@
 ##### * _DenoiseST on DLPFC from 10x Visium._ <br>
 ##### Using python virtual environment with conda. Please create a Pytorch environment, install Pytorch and some other packages, such as "numpy","pandas", "scikit-learn" and "scanpy". See the requirements.txt file for an overview of the packages in the environment we used to produce our results. <br>
 
-#####  We execute the Nonlinear model in the python environment <br>
+#####  We execute the Nonlinear model in the python environment and can refer to the document DenoiseST_DP_run.py.  <br>
 ##### First, cd /home/.../DenoiseST-main/Full <br>
 
 ```python
@@ -59,7 +59,7 @@ for i in [4000, 4500, 5000]:
    adata.obs['domain'].to_csv(f"label_{i}.csv")
 
 ```
-##### We need to install the R language (version R>4.0) in the system's default environment, and if you're using it for the first time, you'll need to install some R packages.
+##### We execute the Linear model in the R environment and can refer to the document DenoiseST_TR_run.py. We need to install the R language (version R>4.0) in the system's default environment, and if you're using it for the first time, you'll need to install some R packages.
 ```python
 
 import rpy2.robjects as robjects
@@ -749,7 +749,7 @@ print(ari)
 
 
 
-##### If the Python environment cannot run, you can also use the R language environment to execute it. It's necessary to set up a virtual R environment. DenoiseST requires R 4.0+ and Bioconductor 3.12+. Specific package dependencies are defined in the package DESCRIPTION and are managed by the Bioconductor and devtools installers. <br>
+##### If the Python environment cannot run Linear model, you can also use the R language environment to execute it. It's necessary to set up a virtual R environment. DenoiseST requires R 4.0+ and Bioconductor 3.12+. Specific package dependencies are defined in the package DESCRIPTION and are managed by the Bioconductor and devtools installers. <br>
 ##### Using virtual environment with conda
 ```R
 
