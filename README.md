@@ -736,7 +736,7 @@ pre_label=pre_label[rownames(pre_label) %in% aa,]
 library("mclust")
 true_label=as.array(true_label[,1])
 ari=adjustedRandIndex(pre_label, true_label)
-print(ari)
+print("ARI:",ari)
 
            ''')
 
@@ -845,7 +845,7 @@ pre_label=pre_label[rownames(pre_label) %in% aa,]
 library("mclust")
 true_label=as.array(true_label[,1])
 ari=adjustedRandIndex(pre_label, true_label)
-print(ari)
+print("ARI:",ari)
 
 ```
 
@@ -984,6 +984,7 @@ library("Seurat")
 library("dplyr")
 library("hdf5r")
 library("ClusterR")
+source('spatial_data_estimate.R')
 hc1= Read10X_h5('/Users/cyx/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5')
 estimate_spatial(hc1=hc1)
 ```
