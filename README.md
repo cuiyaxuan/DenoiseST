@@ -737,7 +737,7 @@ library("mclust")
 true_label=as.array(true_label[,1])
 ari=adjustedRandIndex(pre_label, true_label)
 paste("ARI:",ari)
-
+write.csv(ari,"ARI.csv")
            ''')
 
 ```
@@ -846,6 +846,7 @@ library("mclust")
 true_label=as.array(true_label[,1])
 ari=adjustedRandIndex(pre_label, true_label)
 paste("ARI:",ari)
+write.csv(ari,"ARI.csv")
 
 ```
 
