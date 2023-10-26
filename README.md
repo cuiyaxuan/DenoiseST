@@ -856,6 +856,7 @@ group6=t(group6)
 mm=result(mat,group1,group2,group3,group4,group5,group6)
 
 label<-spectralClustering(mm, K=k)
+write.csv(ari,"ARI.csv")
 pre_label=label
 pre_label[1] 
 pre_label=as.data.frame(pre_label)
