@@ -7,7 +7,7 @@
 
 #####  We execute the Nonlinear model in the python environment and can refer to the document DenoiseST_DP_run.py.  <br>
 
-##### Compute dropout rate.  <br>
+##### Compute dropout rate. If the dropout rate is less than 0.85, execute the simplified version. <br>
 
 ```python
 import matplotlib as mpl
