@@ -6,6 +6,29 @@
 ##### Using python virtual environment with conda. Please create a Pytorch environment, install Pytorch and some other packages, such as "numpy","pandas", "scikit-learn" and "scanpy". See the requirements.txt file for an overview of the packages in the environment we used to produce our results. <br>
 
 #####  We execute the Nonlinear model in the python environment and can refer to the document DenoiseST_DP_run.py.  <br>
+
+##### Compute dropout rate.  <br>
+
+```python
+import matplotlib as mpl
+import scanpy as sc
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import warnings
+import dropout
+mpl.rcParams['pdf.fonttype'] = 42
+mpl.rcParams["font.sans-serif"] = "Arial"
+warnings.filterwarnings('ignore')
+file_fold = '/home/cuiyaxuan/spatialLIBD/151672/' # your path
+adata = sc.read_visium(file_fold, count_file='151672_filtered_feature_bc_matrix.h5', load_images=True)
+dropout.dropout(adata)
+
+```
+
+
+
 ##### First, cd /home/.../DenoiseST-main/Full <br>
 
 ```python
