@@ -850,6 +850,26 @@ write.csv(ari,"ARI.csv")
 
 ```
 
+
+##### Visualization data
+```python
+import matplotlib as mpl
+import scanpy as sc
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import warnings
+import visual
+mpl.rcParams['pdf.fonttype'] = 42
+mpl.rcParams["font.sans-serif"] = "Arial"
+warnings.filterwarnings('ignore')
+file_fold = '/home/cuiyaxuan/spatialLIBD/151672/' # your path
+adata = sc.read_visium(file_fold, count_file='151672_filtered_feature_bc_matrix.h5', load_images=True)
+df_label=pd.read_csv('/home/cuiyaxuan/dropout/label.csv', index_col=0) 
+visual.visual(adata,df_label)
+
+```
 ![image](https://github.com/cuiyaxuan/DenoiseST/blob/main/Image/151673pic.jpg)
 
 
