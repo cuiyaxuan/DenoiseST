@@ -21,8 +21,8 @@ import dropout
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams["font.sans-serif"] = "Arial"
 warnings.filterwarnings('ignore')
-file_fold = '/home/cuiyaxuan/spatialLIBD/151672/' # your path
-adata = sc.read_visium(file_fold, count_file='151672_filtered_feature_bc_matrix.h5', load_images=True)
+file_fold = '/home/cuiyaxuan/spatialLIBD/151673/' # your path
+adata = sc.read_visium(file_fold, count_file='151673_filtered_feature_bc_matrix.h5', load_images=True)
 dropout.dropout(adata)
 
 ```
