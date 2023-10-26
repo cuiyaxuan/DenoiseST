@@ -5,9 +5,7 @@
 ##### * _DenoiseST on DLPFC from 10x Visium._ <br>
 ##### Using python virtual environment with conda. Please create a Pytorch environment, install Pytorch and some other packages, such as "numpy","pandas", "scikit-learn" and "scanpy". See the requirements.txt file for an overview of the packages in the environment we used to produce our results. <br>
 
-#####  We execute the Nonlinear model in the python environment and can refer to the document DenoiseST_DP_run.py.  <br>
-
-##### Compute dropout rate. If the dropout rate is less than 0.85, execute the simplified version. <br>
+##### Compute dropout rate. If the dropout rate is less than 0.85, use the simplified version; otherwise, use the full version. <br>
 
 ```python
 import matplotlib as mpl
@@ -28,7 +26,7 @@ dropout.dropout(adata)
 ```
 
 
-
+##### Full Version. We execute the Nonlinear model in the python environment and can refer to the document DenoiseST_DP_run.py.  <br>
 ##### First, cd /home/.../DenoiseST-main/Full <br>
 
 ```python
