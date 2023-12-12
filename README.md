@@ -477,7 +477,6 @@ DF1 <- mutate(tissue_local, id = rownames(tissue_local))
 mat=as.data.frame(mat)
 DF2 <- mutate(mat, id = rownames(mat))
 dat=merge(DF1,DF2,by="id")
-###对基因进行处理，合并基因和xy坐标
 x_y_list=dat[,3:4]
 dat=t(dat)
 df1=read.csv("df1.csv",row.names = 1,header = T)
