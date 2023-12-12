@@ -39,7 +39,7 @@ from sklearn import metrics
 import multiprocessing as mp
 
 
-# the location of R, which is necessary for mclust algorithm. Please replace the path below with local R installation path
+# the location of R, which is necessary for mclust algorithm. Please replace the path below with local R installation path. Please install mclust package <install.packages('mclust')> 
 os.environ['R_HOME'] = '/scbio4/tools/R/R-4.0.3_openblas/R-4.0.3'
 def setup_seed(seed=41):
     import torch
@@ -87,6 +87,18 @@ import rpy2.robjects as robjects
 
 
 robjects.r('''
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("SingleCellExperiment")
+BiocManager::install("SC3")
+install.packages('Seurat')
+install.packages("hdf5r")
+install.packages('ggplot2')
+install.packages('dplyr')
+install.packages('foreach')
+install.packages('parallel')
+install.packages('doParallel')
+install.packages('mclust')
 install.packages('Seurat')
 install.packages("hdf5r")
 install.packages('ggplot2')
@@ -179,7 +191,6 @@ install.packages('mclust')
 
 ```R
 
-
 library(SingleCellExperiment)
 library(SC3)
 library(ggplot2)
@@ -212,46 +223,9 @@ stopCluster(cl)
 
 source('GNN_Tradition_6.R')
 
-# hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
-pbmc=CreateSeuratObject(counts = hc1, project = "HC_1")
-pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 5000)
-all.genes <- rownames(pbmc)
-mat<-as.matrix(pbmc[["RNA"]]@data)
-a <- VariableFeatures(pbmc)
-mat=mat[rownames(mat) %in% a,]
-# dim(mat)
-
-group1=read.csv("./label_4000.csv",row.names = 1)
-group2=read.csv("./label_4500.csv",row.names = 1)
-group3=read.csv("./label_5000.csv",row.names = 1)
-group4=read.table("./label1.txt",row.names = 1)
-group5=read.table("./label2.txt",row.names = 1)
-group6=read.table("./label3.txt",row.names = 1)
-
-group1=t(group1)
-group2=t(group2)
-group3=t(group3)
-group4=t(group4)
-group5=t(group5)
-group6=t(group6)
-mm=result(mat,group1,group2,group3,group4,group5,group6)
-
-label<-spectralClustering(mm, K=k)
-write.csv(ari,"ARI.csv")
-pre_label=label
-pre_label[1] 
-pre_label=as.data.frame(pre_label)
-rownames(pre_label)=colnames(mat)
-true_label=read.csv('/home/cuiyaxuan/spatialLIBD/151673/cluster_labels_151673.csv',row.names = 1) # the ground truth label
-a <- rownames(pre_label)
-aa <- rownames(true_label)
-pre_label=pre_label[rownames(pre_label) %in% aa,]
-
-library("mclust")
-true_label=as.array(true_label[,1])
-ari=adjustedRandIndex(pre_label, true_label)
-paste("ARI:",ari)
-write.csv(ari,"ARI.csv")
+source('label_ARI.R')
+true_label=read.csv('/home/cuiyaxuan/spatialLIBD/151673/cluster_labels_151673.csv',row.names = 1)
+conlabel(hc1,k,true_label)
 
 ```
 
@@ -454,31 +428,15 @@ library("hdf5r")
 library(philentropy)
 library(foreach)
 library(parallel)
-
-
 library(doParallel)
 source('distribution.R')
 
 hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
 label=read.csv("/home/cuiyaxuan/metric_change/revise_R2/est_151673/conlabel.csv",header = T,row.names = 1) # cluster label
 k=2 ##### Define the cluster to be analyzed
-
 dis<-distri(hc1,label,k)
 
-
-
-
-
-
-
-
-
-
-
-
 #################################Spatial gene value compute################################
-
-
 
 library(DEGman)
 library("Seurat")
@@ -489,14 +447,12 @@ library(foreach)
 library(parallel)
 library(doParallel)
 
-
 files<-dir(path = "./",
              full.names = T,
              pattern = ".csv")
   library(tidyverse)
   df<-map(files,read.csv)
-  class(df)
-  #df1<-reduce(df,full_join)
+
   df1<-reduce(df,inner_join)
   df1=df1[-1,]
   
@@ -511,42 +467,22 @@ pbmc=NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 30000)
 all.genes <- rownames(pbmc)
 mat<-as.matrix(pbmc[["RNA"]]@data)
-max(mat)
-min(mat)
-dim(mat)
 a <- VariableFeatures(pbmc)
 mat=mat[rownames(mat) %in% a,]
-dim(mat)
 mat=t(mat)
 aa <- rownames(mat)
 tissue_local=tissue_local[rownames(tissue_local) %in% aa,]
 
 DF1 <- mutate(tissue_local, id = rownames(tissue_local))
-class(tissue_local)
-class(mat)
 mat=as.data.frame(mat)
 DF2 <- mutate(mat, id = rownames(mat))
 dat=merge(DF1,DF2,by="id")
-#View(dat)
-###对基因进行处理，合并基因和xy坐标
 x_y_list=dat[,3:4]
-#View(x_y_list)
-dim(x_y_list)
 dat=t(dat)
-#View(dat)
 df1=read.csv("df1.csv",row.names = 1,header = T)
-class(df1[,1])
-class(rownames(dat))
-dim(dat)
-class(rownames(dat))
-#View(rownames(dat))
-class(df1[,1])
-
 
 dat1=dat[rownames(dat) %in% df1[,1],]
-#geneval=as.numeric(dat[rownames(dat) %in% df1[,2][8],])
 dat1=t(dat1)
-dim(dat1)
 ############################################################################################
 n_cores=24
 cls <- makeCluster(n_cores) ## call 24 cpu cores
