@@ -39,7 +39,7 @@ from sklearn import metrics
 import multiprocessing as mp
 
 
-# the location of R, which is necessary for mclust algorithm. Please replace the path below with local R installation path
+# the location of R, which is necessary for mclust algorithm. Please replace the path below with local R installation path. Please install mclust package <install.packages('mclust')> 
 os.environ['R_HOME'] = '/scbio4/tools/R/R-4.0.3_openblas/R-4.0.3'
 def setup_seed(seed=41):
     import torch
