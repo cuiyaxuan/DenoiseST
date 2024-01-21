@@ -28,7 +28,7 @@ library("dplyr")
 library("hdf5r")
 library("ClusterR")
 source('spatial_data_estimate.R')
-hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151672/151672_filtered_feature_bc_matrix.h5')
+hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151672/151672_filtered_feature_bc_matrix.h5')  #### to your path
 estimate_spatial(hc1=hc1)
            ''')
 
@@ -53,9 +53,10 @@ mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams["font.sans-serif"] = "Arial"
 warnings.filterwarnings('ignore')
 file_fold = '/home/cuiyaxuan/spatialLIBD/151672/' # your path
-adata = sc.read_visium(file_fold, count_file='151672_filtered_feature_bc_matrix.h5', load_images=True)
+adata = sc.read_visium(file_fold, count_file='151672_filtered_feature_bc_matrix.h5', load_images=True)  #### project name
 drop=dropout.dropout(adata)
 dropout.dropout(adata)
+print(drop)
 ```
 
 
