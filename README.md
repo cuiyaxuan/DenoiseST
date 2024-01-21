@@ -30,7 +30,7 @@ library("dplyr")
 library("hdf5r")
 library("ClusterR")
 source('spatial_data_estimate.R')
-hc1= Read10X_h5('/Users/cyx/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5')
+hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151672/151672_filtered_feature_bc_matrix.h5')
 estimate_spatial(hc1=hc1)
            ''')
 
