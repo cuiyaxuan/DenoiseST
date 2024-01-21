@@ -5,7 +5,39 @@
 ##### * _DenoiseST on DLPFC from 10x Visium._ <br>
 ##### Using python virtual environment with conda. Please create a Pytorch environment, install Pytorch and some other packages, such as "numpy","pandas", "scikit-learn" and "scanpy". See the requirements.txt file for an overview of the packages in the environment we used to produce our results. <br>
 
-##### Compute dropout rate. If the dropout rate is less than 0.9, use the simplified version; otherwise, use the full version. <br>
+#### Estimated number of spatial transcriptome data clusters. We utilized the ClusterR package in the R language for estimation; however, it can also be executed in a Python environment with the prerequisite installation of specific R packages
+##### Using R virtual environment with conda <br>
+
+```R
+install.packages('Seurat')
+install.packages("hdf5r")
+install.packages('dplyr')
+install.packages('ClusterR')
+
+```
+##### First, cd /home/.../DenoiseST-main/Full <br>
+
+```R
+
+
+import rpy2.robjects as robjects
+
+
+robjects.r('''
+library("Seurat")
+library("dplyr")
+library("hdf5r")
+library("ClusterR")
+source('spatial_data_estimate.R')
+hc1= Read10X_h5('/Users/cyx/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5')
+estimate_spatial(hc1=hc1)
+           ''')
+
+
+```
+
+
+##### Compute dropout rate. If the dropout rate is less than 0.85, use the simplified version; otherwise, use the full version. <br>
 
 ```python
 import matplotlib as mpl
@@ -19,10 +51,10 @@ import dropout
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams["font.sans-serif"] = "Arial"
 warnings.filterwarnings('ignore')
-file_fold = '/home/cuiyaxuan/spatialLIBD/151673/' # your path
-adata = sc.read_visium(file_fold, count_file='151673_filtered_feature_bc_matrix.h5', load_images=True)
+file_fold = '/home/cuiyaxuan/spatialLIBD/151672/' # your path
+adata = sc.read_visium(file_fold, count_file='151672_filtered_feature_bc_matrix.h5', load_images=True)
+drop=dropout.dropout(adata)
 dropout.dropout(adata)
-
 ```
 
 
