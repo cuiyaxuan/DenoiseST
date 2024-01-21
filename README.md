@@ -34,7 +34,7 @@ estimate_spatial(hc1=hc1)
 
 
 ```
-##### We choose the cluster number where the first occurrence of the numerical value of f(k) reaches 1. <br>
+##### We choose the cluster number where the first occurrence of the numerical value of f(k) reaches 1. It will automatically generate a picture depicting the estimated number of clusters in the current directory.<br>
 ![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/estimate_plot.png)
 
 
