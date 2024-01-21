@@ -20,9 +20,7 @@ install.packages('ClusterR')
 
 ```R
 
-
 import rpy2.robjects as robjects
-
 
 robjects.r('''
 library("Seurat")
@@ -36,6 +34,8 @@ estimate_spatial(hc1=hc1)
 
 
 ```
+##### We choose the cluster number where the first occurrence of the numerical value of f(k) reaches 1. <br>
+![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/estimate_plot.png)
 
 
 ##### Compute dropout rate. If the dropout rate is less than 0.85, use the simplified version; otherwise, use the full version. <br>
