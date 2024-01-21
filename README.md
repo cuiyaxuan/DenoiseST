@@ -6,14 +6,15 @@
 ##### Using python virtual environment with conda. Please create a Pytorch environment, install Pytorch and some other packages, such as "numpy","pandas", "scikit-learn" and "scanpy". See the requirements.txt file for an overview of the packages in the environment we used to produce our results. <br>
 
 #### Estimated number of spatial transcriptome data clusters. We utilized the ClusterR package in the R language for estimation; however, it can also be executed in a Python environment with the prerequisite installation of specific R packages
-##### Using R virtual environment with conda <br>
+##### to install some R packages. <br>
 
 ```R
+robjects.r('''
 install.packages('Seurat')
 install.packages("hdf5r")
 install.packages('dplyr')
 install.packages('ClusterR')
-
+           ''')
 ```
 ##### First, cd /home/.../DenoiseST-main/Full <br>
 
