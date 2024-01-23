@@ -489,14 +489,14 @@ adata.obs['domain'].to_csv("label.csv")
 
 
 
-# FVG:identify functionally variable genes
+
+# FVG:identifying functionally variable genes
 
 ##### Using R virtual environment with conda <br>
 ```R
 
 install.packages("devtools")
 devtools::install_github("shaoqiangzhang/DEGman")
-
 
 install.packages('Seurat')
 install.packages("hdf5r")
@@ -509,7 +509,16 @@ install.packages('doParallel')
 ```
 
 ##### Then, we execute the FVG model in the R environment <br>
-##### First, cd /home/.../DenoiseST-main/FVG <br>
+##### First, cd /home/.../DenoiseST-main/Full <br>
+
+```R
+conda create -n r4
+source activate r4
+
+conda search r-base
+conda install r-base=4.2.0
+```
+
 
 ```R
 library(DEGman)
@@ -523,8 +532,8 @@ library(doParallel)
 source('distribution.R')
 
 hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
-label=read.csv("/home/cuiyaxuan/metric_change/revise_R2/est_151673/conlabel.csv",header = T,row.names = 1) # cluster label
-k=2 ##### Define the cluster to be analyzed
+label=read.csv("/home/cuiyaxuan/Zero/DenoiseST-master2/Full/label.csv",header = T,row.names = 1) # cluster label
+k=8 ##### Define the cluster to be analyzed
 dis<-distri(hc1,label,k)
 
 #################################Spatial gene value compute################################
