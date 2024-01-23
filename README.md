@@ -7,8 +7,9 @@
 
 #### Estimated number of spatial transcriptome data clusters. We utilized the ClusterR package in the R language for estimation; however, it can also be executed in a Python environment with the prerequisite installation of specific R packages
 ##### to install some R packages. <br>
-
+##### First, cd /home/.../DenoiseST-main/Full <br>
 ```R
+import rpy2.robjects as robjects
 robjects.r('''
 install.packages('Seurat')
 install.packages("hdf5r")
@@ -16,7 +17,6 @@ install.packages('dplyr')
 install.packages('ClusterR')
            ''')
 ```
-##### First, cd /home/.../DenoiseST-main/Full <br>
 
 ```R
 
@@ -28,7 +28,7 @@ library("dplyr")
 library("hdf5r")
 library("ClusterR")
 source('spatial_data_estimate.R')
-hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151672/151672_filtered_feature_bc_matrix.h5')  #### to your path
+hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151672/151672_filtered_feature_bc_matrix.h5')  #### to your path and file name
 estimate_spatial(hc1=hc1)
            ''')
 
