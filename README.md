@@ -61,7 +61,7 @@ estimate_spatial(hc1=hc1)
 
 ```
 ##### We choose the cluster number where the first occurrence of the numerical value of f(k) reaches 1. It will automatically generate a picture depicting the estimated number of clusters in the current directory.<br>
-![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/estimate_plot.png)
+![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/est.png)
 
  
 ##### First, cd /home/.../DenoiseST-main/Full <br>
@@ -374,7 +374,7 @@ df_label=pd.read_csv('./label.csv', index_col=0)
 visual.visual(adata,df_label)
 
 ```
-![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/151672pic.png)
+![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/151672.png)
 
 
 
@@ -433,7 +433,7 @@ adata.obs['domain']
 adata.obs['domain'].to_csv("label.csv")
 
 ```
-
+![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/breast.png)
 
 ## High resolution data <br>
 
@@ -485,7 +485,7 @@ adata.obs['domain']
 adata.obs['domain'].to_csv("label.csv")
 
 ```
-
+![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/hip.png)
 
 
 
