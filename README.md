@@ -374,7 +374,7 @@ df_label=pd.read_csv('./label.csv', index_col=0)
 visual.visual(adata,df_label)
 
 ```
-![image](https://github.com/cuiyaxuan/DenoiseST/blob/main/Image/151672pic.jpg)
+![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/151672pic.png)
 
 
 
