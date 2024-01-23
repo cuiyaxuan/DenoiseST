@@ -207,8 +207,25 @@ print(drop)
 ```
 
 
-##### Full Version. We execute the nonlinear denoise model in the python environment and can refer to the document DenoiseST_DP_run.py.  <br>
+##### Full Version. We execute the nonlinear denoising model in the python environment and can refer to the document DenoiseST_DP_run.py.  <br>
 ##### First, cd /home/.../DenoiseST-main/Full <br>
+```R
+conda create -n NL
+source activate NL
+
+conda install python=3.8
+conda install conda-forge::pot
+conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+conda install conda-forge::scanpy
+pip install anndata==0.8.0
+pip install pandas==1.4.2
+
+pip install rpy2==3.5.1
+pip install scikit-learn==1.1.1
+pip install scipy==1.8.1
+pip install tqdm==4.64.0
+```
+
 
 ```python
 from DenoiseST import DenoiseST
@@ -261,7 +278,7 @@ for i in [4000, 4500, 5000]:
    adata.obs['domain'].to_csv(f"label_{i}.csv")
 
 ```
-##### We execute the Linear model in the R environment and can refer to the document DenoiseST_TR_run.py. We need to install the R language (version R>4.0) in the system's default environment, and if you're using it for the first time, you'll need to install some R packages.
+##### We execute the linearing model in the R environment and can refer to the document DenoiseST_TR_run.py. We need to install the R language (version R>4.0) in the system's default environment, and if you're using it for the first time, you'll need to install some R packages.
 ```python
 
 import rpy2.robjects as robjects
@@ -341,76 +358,6 @@ conlabel(hc1,k,true_label)
 
 
 
-
-
-
-
-
-##### If the Python environment cannot run Linear model, you can also use the R language environment to execute it. It's necessary to set up a virtual R environment. DenoiseST requires R 4.0+ and Bioconductor 3.12+. Specific package dependencies are defined in the package DESCRIPTION and are managed by the Bioconductor and devtools installers. <br>
-##### Using virtual environment with conda
-```R
-
-if (!require("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install("SingleCellExperiment")
-BiocManager::install("SC3")
-
-
-install.packages('Seurat')
-install.packages("hdf5r")
-install.packages('ggplot2')
-install.packages('dplyr')
-install.packages('foreach')
-install.packages('parallel')
-install.packages('doParallel')
-install.packages('mclust')
-
-```
-
-##### Then, we execute the Linear model in the R environment
-
-
-```R
-
-library(SingleCellExperiment)
-library(SC3)
-library(ggplot2)
-library("Seurat")
-library("ggplot2")
-library("dplyr")
-library("hdf5r")
-library(foreach)
-library(parallel)
-library(doParallel)
-
-source('151673_cri4.R')
-hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
-feature<-select_feature(hc1,4000,500)
-detectCores()
-cl <- makeCluster(3) # call 3 cpu cores
-k=7 # k represent the number of spatial domains.
-parLapply(cl,1:3,feature=feature,k=k,pearson_metric) 
-stopCluster(cl)
-
-tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151673/spatial/tissue_positions_list.csv",row.names = 1,header = FALSE)
-adj_matrix=construct_adj_matrix(feature[[1]],tissue_local)
-write.table(adj_matrix,file="adj_matrix.txt",sep=" ",quote=TRUE)
-detectCores()
-cl <- makeCluster(3) # call 3 cpu cores
-parLapply(cl,1:3,K=k,spectral_nei)
-stopCluster(cl)
-
-
-
-source('GNN_Tradition_6.R')
-
-source('label_ARI.R')
-true_label=read.csv('/home/cuiyaxuan/spatialLIBD/151673/cluster_labels_151673.csv',row.names = 1)
-conlabel(hc1,k,true_label)
-
-```
-
-
 ##### Visualization data
 ```python
 import matplotlib as mpl
@@ -426,7 +373,7 @@ mpl.rcParams["font.sans-serif"] = "Arial"
 warnings.filterwarnings('ignore')
 file_fold = '/home/cuiyaxuan/spatialLIBD/151672/' # your path
 adata = sc.read_visium(file_fold, count_file='151672_filtered_feature_bc_matrix.h5', load_images=True)
-df_label=pd.read_csv('/home/cuiyaxuan/dropout/label.csv', index_col=0) 
+df_label=pd.read_csv('./label.csv', index_col=0) 
 visual.visual(adata,df_label)
 
 ```
