@@ -28,7 +28,7 @@ pip install rpy2==3.5.1
 pip install scikit-learn==1.1.1
 pip install scipy==1.8.1
 pip install tqdm==4.64.0
-           ''')
+
 ```
 
 ##### to install some R packages. <br>
