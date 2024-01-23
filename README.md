@@ -259,9 +259,9 @@ device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
 
 
 for i in [4000, 4500, 5000]:
-   n_clusters = 7  ###### the number of spatial domains.
-   file_fold = '/home/cuiyaxuan/spatialLIBD/151673' #### to your path
-   adata = sc.read_visium(file_fold, count_file='151673_filtered_feature_bc_matrix.h5', load_images=True) #### project name
+   n_clusters = 5  ###### the number of spatial domains.
+   file_fold = '/home/cuiyaxuan/spatialLIBD/151672' #### to your path
+   adata = sc.read_visium(file_fold, count_file='151672_filtered_feature_bc_matrix.h5', load_images=True) #### project name
    adata.var_names_make_unique()
    model = DenoiseST(adata,device=device,n_top_genes=i)
    adata = model.train()
@@ -329,7 +329,7 @@ library(parallel)
 library(doParallel)
 
 source('151673_cri4.R')
-hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
+hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151672/151672_filtered_feature_bc_matrix.h5') #### to your path and project name
 feature<-select_feature(hc1,4000,500)
 detectCores()
 cl <- makeCluster(3) # call 3 cpu cores
@@ -337,21 +337,18 @@ k=7 # k represent the number of spatial domains.
 parLapply(cl,1:3,feature=feature,k=k,pearson_metric) 
 stopCluster(cl)
 
-tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151673/spatial/tissue_positions_list.csv",row.names = 1,header = FALSE)
+tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151672/spatial/tissue_positions_list.csv",row.names = 1,header = FALSE)
 adj_matrix=construct_adj_matrix(feature[[1]],tissue_local)
 write.table(adj_matrix,file="adj_matrix.txt",sep=" ",quote=TRUE)
 detectCores()
 cl <- makeCluster(3) # call 3 cpu cores
 parLapply(cl,1:3,K=k,spectral_nei)
 stopCluster(cl)
-
-
-
 source('GNN_Tradition_6.R')
 
 source('label_ARI.R')
-true_label=read.csv('/home/cuiyaxuan/spatialLIBD/151673/cluster_labels_151673.csv',row.names = 1)
-conlabel(hc1,k,true_label)
+true_label=read.csv(ARI_compare,row.names = 1)
+conlabel(hc1,k,true_label,compare=T)        ####   compare=T is compare ARI with the ground truth, compare=F is no compare ARI with the ground truth.
            ''')
 
 ```
@@ -377,7 +374,7 @@ df_label=pd.read_csv('./label.csv', index_col=0)
 visual.visual(adata,df_label)
 
 ```
-![image](https://github.com/cuiyaxuan/DenoiseST/blob/main/Image/151673pic.jpg)
+![image](https://github.com/cuiyaxuan/DenoiseST/blob/main/Image/151672pic.jpg)
 
 
 
@@ -488,40 +485,6 @@ adata.obs['domain']
 adata.obs['domain'].to_csv("label.csv")
 
 ```
-
-
-# Estimated number of spatial transcriptome data clusters
-
-##### Using R virtual environment with conda <br>
-```R
-
-install.packages("devtools")
-devtools::install_github("shaoqiangzhang/DEGman")
-
-
-install.packages('Seurat')
-install.packages("hdf5r")
-install.packages('dplyr')
-install.packages('ClusterR')
-
-```
-##### First, cd /home/.../DenoiseST-main/Full <br>
-
-```R
-library("Seurat")
-library("dplyr")
-library("hdf5r")
-library("ClusterR")
-source('spatial_data_estimate.R')
-hc1= Read10X_h5('/Users/cyx/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5')
-estimate_spatial(hc1=hc1)
-```
-
-
-
-
-
-
 
 
 
