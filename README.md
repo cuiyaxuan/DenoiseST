@@ -184,16 +184,7 @@ else:
 ```
 
 
-
-
-
-
-
-
-
-
-
-
+##### You can also create two environments: one for the linear model and one for the nonlinear model. <br>
 ##### Compute dropout rate. If the dropout rate is less than 0.85, use the simplified version; otherwise, use the full version. <br>
 
 ```python
@@ -216,7 +207,7 @@ print(drop)
 ```
 
 
-##### Full Version. We execute the Nonlinear model in the python environment and can refer to the document DenoiseST_DP_run.py.  <br>
+##### Full Version. We execute the nonlinear denoise model in the python environment and can refer to the document DenoiseST_DP_run.py.  <br>
 ##### First, cd /home/.../DenoiseST-main/Full <br>
 
 ```python
