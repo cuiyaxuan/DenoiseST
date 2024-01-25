@@ -328,12 +328,12 @@ library(foreach)
 library(parallel)
 library(doParallel)
 
-source('151673_cri4.R')
+source('Cri4.R')
 hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151672/151672_filtered_feature_bc_matrix.h5') #### to your path and project name
 feature<-select_feature(hc1,4000,500)
 detectCores()
 cl <- makeCluster(3) # call 3 cpu cores
-k=7 # k represent the number of spatial domains.
+k=5 # k represent the number of spatial domains.
 parLapply(cl,1:3,feature=feature,k=k,pearson_metric) 
 stopCluster(cl)
 
@@ -347,8 +347,8 @@ stopCluster(cl)
 source('GNN_Tradition_6.R')
 
 source('label_ARI.R')
-true_label=read.csv(ARI_compare,row.names = 1)
-conlabel(hc1,k,true_label,compare=T)        ####   compare=T is compare ARI with the ground truth, compare=F is no compare ARI with the ground truth.
+true_label=read.csv('/home/cuiyaxuan/spatialLIBD/151672/cluster_labels_151672.csv')
+conlabel(hc1,k,true_label,compare=T) ##compare=T is compare ARI with the ground truth, compare=F is no compare ARI with the ground truth
            ''')
 
 ```
@@ -414,7 +414,7 @@ setup_seed(41)
 device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
 
 
-n_clusters = 10  ###### the number of spatial domains.
+n_clusters = 20  ###### the number of spatial domains.
 file_fold = '/home/cuiyaxuan/spatialLIBD/3.Human_Breast_Cancer' #### to your path
 adata = sc.read_visium(file_fold, count_file='filtered_feature_bc_matrix.h5', load_images=True) #### project name
 adata.var_names_make_unique()
@@ -492,6 +492,17 @@ adata.obs['domain'].to_csv("label.csv")
 
 # FVG:identifying functionally variable genes
 
+##### Then, we execute the FVG model in the R environment <br>
+##### First, cd /home/.../DenoiseST-main/Full <br>
+
+```R
+conda create -n r4
+source activate r4
+
+conda search r-base
+conda install r-base=4.2.0
+```
+
 ##### Using R virtual environment with conda <br>
 ```R
 
@@ -508,60 +519,59 @@ install.packages('doParallel')
 
 ```
 
-##### Then, we execute the FVG model in the R environment <br>
-##### First, cd /home/.../DenoiseST-main/Full <br>
-
+##### DEGs in spatial transcriptomics <br>
 ```R
-conda create -n r4
-source activate r4
 
-conda search r-base
-conda install r-base=4.2.0
-```
-
-
-```R
 library(DEGman)
 library("Seurat")
 library("dplyr")
 library("hdf5r")
 library(philentropy)
 library(foreach)
-library(parallel)
 library(doParallel)
 source('distribution.R')
 
 hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
 label=read.csv("/home/cuiyaxuan/Zero/DenoiseST-master2/Full/label.csv",header = T,row.names = 1) # cluster label
-k=8 ##### Define the cluster to be analyzed
+k=1 ##### Default parameters
 dis<-distri(hc1,label,k)
 
-#################################Spatial gene value compute################################
+```
+#####  DEGs data in a CSV file <br>
 
-library(DEGman)
+##### FVGs in spatial transcriptomics <br>
+
+```R
+
+files<-dir(path = "./",full.names = T,pattern = ".csv")
+library(tidyverse)
+df<-map(files,read.csv)
+class(df)
+vec1=df[[1]]
+for (i in 2:length(df)) {
+  vec1=rbind(vec1,df[[i]])
+}
+fre=table(vec1$x)
+
+rounded_number=floor((length(df)-1)/2)
+fre=names(table(vec1$x))[table(vec1$x)>=rounded_number]
+write.csv(fre,"df1.csv")
+
+#################################Functionally variable genes weight compute################################
+
 library("Seurat")
 library("dplyr")
 library("hdf5r")
 library(philentropy)
 library(foreach)
-library(parallel)
 library(doParallel)
 
-files<-dir(path = "./",
-             full.names = T,
-             pattern = ".csv")
-  library(tidyverse)
-  df<-map(files,read.csv)
 
-  df1<-reduce(df,inner_join)
-  df1=df1[-1,]
-  
-  write.csv(df1,"df1.csv")
 
 source('test_finally.R')
-
-tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151673/spatial/tissue_positions_list.csv",row.names = 1,header = FALSE) #### to your path and project name
 hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
+tissue_local=read.csv("/home/cuiyaxuan/spatialLIBD/151673/spatial/tissue_positions_list.csv",row.names = 1,header = FALSE) #### to your path and project name
+print(dim(tissue_local))
 pbmc=CreateSeuratObject(counts = hc1, project = "HC_1", min.cells = 10)
 pbmc=NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 30000)
@@ -583,16 +593,15 @@ df1=read.csv("df1.csv",row.names = 1,header = T)
 
 dat1=dat[rownames(dat) %in% df1[,1],]
 dat1=t(dat1)
-############################################################################################
 n_cores=24
 cls <- makeCluster(n_cores) ## call 24 cpu cores
 registerDoParallel(cls)
-crinum=foreach(q=1:dim(dat1)[2],.combine='rbind') %dopar% cripar(q,dat1,x_y_list)
+crinum=foreach(q=1:dim(dat1)[2],.combine='rbind') %dopar% cripar(q,dat1,x_y_list,Ccri=50,highval=500,lowval=50)
 stopCluster(cls)
-write.csv(crinum,"mark_gene_cri_vec.csv")
-write.csv(df1[,1],"vectmark.csv")
+fvg=cbind(df1,crinum)
+fvg_sort <- fvg[order(-fvg$crinum), ]
 
+write.csv(fvg_sort ,"fvg.csv")
 
 ```
-
-
+##### DEGs data in a fvg.csv file <br>
