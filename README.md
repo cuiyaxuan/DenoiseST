@@ -660,3 +660,6 @@ write.csv(fvg_sort ,"fvg.csv")
 
 ```
 ##### DEGs data in a fvg.csv file <br>
+
+##### For high-resolution datasets, functionally variable genes' weight computation is not performed to reduce computational complexity. <br>
+
