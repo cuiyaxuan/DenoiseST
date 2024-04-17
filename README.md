@@ -663,4 +663,4 @@ write.csv(fvg_sort ,"fvg.csv")
 ##### DEGs data in a fvg.csv file <br>
 
 ##### For high-resolution datasets, functionally variable genes' weight computation is not performed to reduce computational complexity. <br>
-
+##### The parameter "rounded_number" can be manually set to determine the stringency of selecting significant genes based on the frequency of gene names appearing in different categories, or the default parameter can be used. <br>
