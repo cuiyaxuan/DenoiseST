@@ -435,6 +435,7 @@ adata.obs['domain'].to_csv("label.csv")
 ```
 ![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/breast.png)
 
+
 ## High resolution data <br>
 
 ```python
@@ -487,6 +488,60 @@ adata.obs['domain'].to_csv("label.csv")
 ```
 ![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/hip.png)
 
+
+## High resolution Visium HD data <br>
+
+```python
+from DenoiseST_HD import DenoiseST
+import os
+import torch
+import pandas as pd
+import scanpy as sc
+from sklearn import metrics
+import multiprocessing as mp
+
+def setup_seed(seed=41):
+    import torch
+    import os
+    import numpy as np
+    import random
+    torch.manual_seed(seed)  
+    np.random.seed(seed)  # Numpy module.
+    random.seed(seed)  # Python random module.
+    if torch.cuda.is_available():
+        # torch.backends.cudnn.benchmark = False
+        torch.backends.cudnn.deterministic = True
+        torch.cuda.manual_seed(seed)  
+        torch.cuda.manual_seed_all(seed) 
+        #os.environ['PYTHONHASHSEED'] = str(seed)
+
+setup_seed(41)
+
+device = torch.device('cpu')
+# cpu_num是一个整数
+torch.set_num_threads(24)
+
+
+n_clusters = 30  ###### the number of spatial domains.
+file_fold = '/home/cuiyaxuan/spatialLIBD/square_016um/' #### to your path
+adata = sc.read_visium(file_fold, count_file='filtered_feature_bc_matrix.h5', load_images=True) #### project name
+adata.var_names_make_unique()
+model = DenoiseST(adata,device=device,n_top_genes=5000)
+adata = model.train()
+radius = 50
+tool = 'mclust' # mclust, leiden, and louvain
+from utils import clustering
+
+if tool == 'mclust':
+   clustering(adata, n_clusters, radius=radius, method=tool, refinement=False)
+elif tool in ['leiden', 'louvain']:
+   clustering(adata, n_clusters, radius=radius, method=tool, start=0.1, end=2.0, increment=0.01, refinement=False)
+
+adata.obs['domain']
+adata.obs['domain'].to_csv("label.csv")
+
+```
+![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/human_colon_cancer_domain20-1.png)
 
 
 
