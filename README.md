@@ -556,6 +556,8 @@ source activate r4
 
 conda search r-base
 conda install r-base=4.2.0
+conda install conda-forge::r-seurat==4.4.0
+conda install conda-forge::r-hdf5r
 ```
 
 ##### Using R virtual environment with conda <br>
@@ -564,7 +566,6 @@ conda install r-base=4.2.0
 install.packages("devtools")
 devtools::install_github("shaoqiangzhang/DEGman")
 
-install.packages('Seurat')
 install.packages("hdf5r")
 install.packages('philentropy')
 install.packages('dplyr')
