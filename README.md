@@ -280,33 +280,32 @@ for i in [4000, 4500, 5000]:
 
 ```
 ##### We execute the linearing model in the R environment and can refer to the document DenoiseST_TR_run.py. We need to install the R language (version R>4.0) in the system's default environment, and if you're using it for the first time, you'll need to install some R packages.
+
+```R
+conda create -n NT
+source activate NT
+
+conda search r-base
+conda install r-base=4.2.0
+
+conda install conda-forge::r-seurat==4.4.0
+conda install conda-forge::r-hdf5r
+conda install bioconda::bioconductor-sc3
+
+
+```
+
+
 ```python
 
 import rpy2.robjects as robjects
 
 
 robjects.r('''
-if (!require("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install("SingleCellExperiment")
-BiocManager::install("SC3")
-install.packages('Seurat')
-install.packages("hdf5r")
-install.packages('ggplot2')
-install.packages('dplyr')
+install.packages('ClusterR')
 install.packages('foreach')
-install.packages('parallel')
 install.packages('doParallel')
 install.packages('mclust')
-install.packages('Seurat')
-install.packages("hdf5r")
-install.packages('ggplot2')
-install.packages('dplyr')
-install.packages('foreach')
-install.packages('parallel')
-install.packages('doParallel')
-install.packages('mclust')
-
            ''')
 
 ```
