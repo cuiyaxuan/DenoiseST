@@ -291,7 +291,7 @@ conda install r-base=4.2.0
 conda install conda-forge::r-seurat==4.4.0
 conda install conda-forge::r-hdf5r
 conda install bioconda::bioconductor-sc3
-
+pip install rpy2==3.5.1
 
 ```
 
