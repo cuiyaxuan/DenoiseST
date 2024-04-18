@@ -21,7 +21,7 @@ conda install bioconda::bioconductor-sc3
 
 conda install conda-forge::pot
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
-conda install conda-forge::scanpy
+pip install scanpy
 pip install anndata==0.8.0
 pip install pandas==1.4.2
 
@@ -217,7 +217,7 @@ source activate NL
 conda install python=3.8
 conda install conda-forge::pot
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
-conda install conda-forge::scanpy
+pip install scanpy
 pip install anndata==0.8.0
 pip install pandas==1.4.2
 
