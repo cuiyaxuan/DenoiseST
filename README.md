@@ -518,7 +518,7 @@ def setup_seed(seed=41):
 setup_seed(41)
 
 device = torch.device('cpu')
-# cpu_num是一个整数
+# call 24 cpu cores
 torch.set_num_threads(24)
 
 
