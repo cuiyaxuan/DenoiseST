@@ -464,14 +464,14 @@ def setup_seed(seed=41):
 
 setup_seed(41)
 
-device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 
 n_clusters = 10  ###### the number of spatial domains.
 file_path = '/home/cuiyaxuan/spatialLIBD/6.Mouse_Hippocampus_Tissue/' #please replace 'file_path' with the download path
 adata = sc.read_h5ad(file_path + 'filtered_feature_bc_matrix_200115_08.h5ad') #### project name
 adata.var_names_make_unique()
-model = DenoiseST(adata,device=device,n_top_genes=4000)
+model = DenoiseST(adata,datatype='Slide',device=device,n_top_genes=4000)
 adata = model.train()
 radius = 50
 tool = 'mclust' # mclust, leiden, and louvain
