@@ -474,7 +474,7 @@ adata.var_names_make_unique()
 model = DenoiseST(adata,datatype='Slide',device=device,n_top_genes=4000)
 adata = model.train()
 radius = 50
-tool = 'louvain' # mclust, leiden, and louvain
+tool = 'mclust' # mclust, leiden, and louvain
 from utils import clustering
 
 if tool == 'mclust':
