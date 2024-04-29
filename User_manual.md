@@ -594,9 +594,9 @@ library(doParallel)
 source('distribution.R')
 
 hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
-label=read.csv("/home/cuiyaxuan/Zero/DenoiseST-master2/Full/label.csv",header = T,row.names = 1) # cluster label
-k=1 ##### Default parameters
-dis<-distri(hc1,label,k)
+label=read.csv("/home/cuiyaxuan/metric_change/revise_R2/est_151673/conlabel.csv",header = T,row.names = 1)
+n=1 ##### Marker genes identified for a specific category. 
+dis<-distri(hc1,label,n)
 
 ```
 #####  DEGs data in a CSV file <br>
