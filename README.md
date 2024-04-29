@@ -46,5 +46,41 @@ install.packages('mclust')
            ''')
 ```
 
+
+
+# FVG:identifying functionally variable genes
+
+##### Then, we execute the FVG model in the R environment <br>
+##### First, cd /home/.../DenoiseST-main/FVG <br>
+
+```R
+conda create -n r4
+source activate r4
+
+conda search r-base
+conda install r-base=4.2.0
+conda install conda-forge::r-seurat==4.4.0
+conda install conda-forge::r-hdf5r
+```
+
+##### Using R virtual environment with conda <br>
+```R
+
+install.packages("devtools")
+devtools::install_github("shaoqiangzhang/DEGman")
+
+install.packages("hdf5r")
+install.packages('philentropy')
+install.packages('dplyr')
+install.packages('foreach')
+install.packages('parallel')
+install.packages('doParallel')
+install.packages('tidyverse')
+
+
+```
+
+
+
 ##### For specific details, please refer to the file "1_Example_lowresolve_test.ipynb".Instructions for running other types of spatial transcriptomics data can be found in the IPython notebooks under the "full" directory.<br>
 ##### If your current system environment does not support both R and Python, you can refer to the User Manual for more detailed instructions. Alternatively, you can create two separate environments to run the program. <br>
