@@ -12,7 +12,7 @@ label=read.csv("/home/cuiyaxuan/metric_change/revise_R2/est_151673/conlabel.csv"
 n=1 ##### Marker genes identified for a specific cluster. 
 dis<-distri(hc1,label,n)
 
-
+#You can obtain marker genes for all clusters using the following command. Additionally, you can obtain the most significant genes with the following command.
 
 files<-dir(path = "./",full.names = T,pattern = ".csv")
 library(tidyverse)
