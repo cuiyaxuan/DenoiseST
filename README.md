@@ -7,7 +7,6 @@
 
 ##### DenoiseST is used on spatial transcriptomics (ST) datasets. In essence, you can refer to the following examples: <br>
 
-##### * _DenoiseST on DLPFC from 10x Visium._ <br>
 ##### Using python virtual environment with conda. Please create a Pytorch environment, install Pytorch and some other packages, such as "numpy","pandas", "scikit-learn" and "scanpy". See the requirements.txt file for an overview of the packages in the environment we used to produce our results. Alternatively, you can install the environment dependencies in the following sequence to minimize environment conflicts. <br>
 
 ```R
@@ -47,25 +46,5 @@ install.packages('mclust')
            ''')
 ```
 
-#### Estimated number of spatial transcriptome data clusters. We utilized the ClusterR package in the R language for estimation; however, it can also be executed in a Python environment with the prerequisite installation of specific R packages
-##### First, cd /home/.../DenoiseST-main/Full <br>
-
-```R
-
-import rpy2.robjects as robjects
-
-robjects.r('''
-library("Seurat")
-library("dplyr")
-library("hdf5r")
-library("ClusterR")
-source('spatial_data_estimate.R')
-hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151672/151672_filtered_feature_bc_matrix.h5')  #### to your path and file name
-estimate_spatial(hc1=hc1)
-           ''')
-
-```
-##### We choose the cluster number where the first occurrence of the numerical value of f(k) reaches 1. It will automatically generate a picture depicting the estimated number of clusters in the current directory.<br>
-![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/est.png)
 ##### For specific details, please refer to the file "1_Example_lowresolve_test.ipynb".Instructions for running other types of spatial transcriptomics data can be found in the IPython notebooks under the "full" directory.<br>
 ##### If your current system environment does not support both R and Python, you can refer to the User Manual for more detailed instructions. Alternatively, you can create two separate environments to run the program. <br>
