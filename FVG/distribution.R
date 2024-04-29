@@ -53,7 +53,7 @@ distri<-function(hc1,label,n){
   result=DEGman(amat,dim(matlist[[n]])[2],(dim(amat)[2]-dim(matlist[[n]])[2]))[,1]
 
   file_name <- paste0("output_", n, ".csv")
-  write.csv(result,file_name)
+  write.csv(result,file_name,row.names=FALSE,col.names = TRUE)
   
   
 }
