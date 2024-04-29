@@ -613,10 +613,10 @@ vec1=df[[1]]
 for (i in 2:length(df)) {
   vec1=rbind(vec1,df[[i]])
 }
-fre=table(vec1$x)
+fre=table(vec1$genename)
 
-rounded_number=floor((length(df)-1)/2)
-fre=names(table(vec1$x))[table(vec1$x)>=rounded_number]
+rounded_number=3
+fre=names(table(vec1$genename))[table(vec1$genename)>=rounded_number]
 write.csv(fre,"df1.csv")
 
 #################################Functionally variable genes weight compute################################
