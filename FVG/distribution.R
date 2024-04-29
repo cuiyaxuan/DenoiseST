@@ -10,13 +10,13 @@ library(philentropy)
 distri<-function(hc1,label,n){
   current_directory <- getwd()
 
-  # 获取当前目录下的所有文件
+
   all_files <- list.files(current_directory)
 
-  # 筛选出所有CSV文件
+
   csv_files <- all_files[grep("\\.csv$", all_files, ignore.case = TRUE)]
 
-  # 删除所有CSV文件
+
   for (csv_file in csv_files) {
     file_path <- file.path(current_directory, csv_file)
     unlink(file_path)
