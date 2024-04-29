@@ -595,11 +595,11 @@ source('distribution.R')
 
 hc1= Read10X_h5('/home/cuiyaxuan/spatialLIBD/151673/151673_filtered_feature_bc_matrix.h5') #### to your path and project name
 label=read.csv("/home/cuiyaxuan/metric_change/revise_R2/est_151673/conlabel.csv",header = T,row.names = 1) #### to your path of cluster label
-n=1 ##### Marker genes identified for a specific category. 
+n=1 ##### Marker genes identified for a specific cluster. 
 dis<-distri(hc1,label,n)
 
 ```
-#####  DEGs data in a CSV file <br>
+#####  DEGs data in a CSV file.You can obtain marker genes for all clusters using the following command. Additionally, you can obtain the most significant genes with the following command. <br>
 
 ##### FVGs in spatial transcriptomics <br>
 
