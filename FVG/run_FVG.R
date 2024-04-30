@@ -69,7 +69,7 @@ dat1=t(dat1)
 n_cores=24
 cls <- makeCluster(n_cores) ## call 24 cpu cores
 registerDoParallel(cls)
-crinum=foreach(q=1:dim(dat1)[2],.combine='rbind') %dopar% cripar(q,dat1,x_y_list,Ccri=50,highval=500,lowval=50)
+crinum=foreach(q=1:dim(dat1)[2],.combine='rbind') %dopar% cripar(q,dat1,x_y_list,Ccri=50,highval=500,lowval=50) #These are default parameters. Users can adjust the parameters according to their own datasets, including the radius length and filtering for high and low expressions.
 stopCluster(cls)
 fvg=cbind(df1,crinum)
 fvg_sort <- fvg[order(-fvg$crinum), ]
