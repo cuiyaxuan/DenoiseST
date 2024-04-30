@@ -4,9 +4,11 @@
 
 
 ##### Due to the protocol issues of various space technology platforms, the data format is very different, and various platforms do not provide morphological images. For the convenience of users, we have changed the way of reading data to make it easier to use.<br>
+##### For specific details, please refer to the file "1_Example_lowresolve_test.ipynb".Instructions for running other types of spatial transcriptomics data can be found in the IPython notebooks under the "full" directory.<br>
+##### If your current system environment does not support both R and Python, you can refer to the User Manual for more detailed instructions. Alternatively, you can create two separate environments to run the program. <br>
 
-##### DenoiseST is used on spatial transcriptomics (ST) datasets. In essence, you can refer to the following examples: <br>
 
+# Identifying spatial domains
 ##### Using python virtual environment with conda. Please create a Pytorch environment, install Pytorch and some other packages, such as "numpy","pandas", "scikit-learn" and "scanpy". See the requirements.txt file for an overview of the packages in the environment we used to produce our results. Alternatively, you can install the environment dependencies in the following sequence to minimize environment conflicts. <br>
 
 ```R
@@ -82,5 +84,4 @@ install.packages('tidyverse')
 
 
 
-##### For specific details, please refer to the file "1_Example_lowresolve_test.ipynb".Instructions for running other types of spatial transcriptomics data can be found in the IPython notebooks under the "full" directory.<br>
-##### If your current system environment does not support both R and Python, you can refer to the User Manual for more detailed instructions. Alternatively, you can create two separate environments to run the program. <br>
+
