@@ -1,3 +1,5 @@
+# You can find the estimate clustering labels and the running results in the DenoiseST/FVG_genename/151673_FVG_result/.
+
 library(DEGman)
 library("Seurat")
 library("dplyr")
