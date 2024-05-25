@@ -1,6 +1,6 @@
 # DenoiseST : A dual-channel unsupervised deep learning-based denoising method to identify spatial domains and functionally variable genes in spatial transcriptomics
 ![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/%E5%B9%BB%E7%81%AF%E7%89%871.png)
-## Tip: To facilitate researchers' usage, examples of our project can be run in the full folder's IPython notebooks (after configuring the environment dependencies as described in the README). We will soon optimize the README page for better usability. Additionally, we are developing a web tutorial for DenoiseST,which will be released soon. [Website Link](https://denoisest-tutorial1.readthedocs.io/en/latest/). We apologize for any inconvenience this may cause. <br>
+## Tip: To facilitate researchers' usage, examples of our project can be run in the full folder's IPython notebooks (after configuring the environment dependencies as described in the README).  Additionally, we have set up a web tutorial to make it easier for users to access. [Website Link](https://denoisest-tutorial1.readthedocs.io/en/latest/). <br>
 
 
 ##### Due to the protocol issues of various space technology platforms, the data format is very different, and various platforms do not provide morphological images. For the convenience of users, we have changed the way of reading data to make it easier to use.<br>
