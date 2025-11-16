@@ -1,4 +1,4 @@
-# DenoiseST : A dual-channel unsupervised deep learning-based denoising method to identify spatial domains and functionally variable genes in spatial transcriptomics
+# scSTADE : An Integrated Deep Learning Framework for Denoising and Analyzing Single-Cell Spatial Transcriptomics
 ![image](https://github.com/cuiyaxuan/DenoiseST/blob/master/Image/%E5%B9%BB%E7%81%AF%E7%89%871.png)
 ## Tip: To facilitate researchers' usage, examples of our project can be run in the full folder's IPython notebooks (after configuring the environment dependencies as described in the README). We will soon optimize the README page for better usability. Additionally, we are developing a web tutorial for DenoiseST, which will be released soon. We apologize for any inconvenience this may cause. <br>
 
